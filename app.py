@@ -296,7 +296,7 @@ elif st.session_state.juego_activo == "llave":
         <div id="end-overlay" class="overlay hidden">
             <div id="end-emoji" style="font-size: 46px;">🎉💧</div>
             <h2 id="end-title" style="color: #01579B; margin: 4px 0;">¡Terminado!</h2>
-            <p style="color: #0277BD; font-weight: 700; font-size: 16px; margin: 4px 0;">Salvates <span id="final-liters">0</span> litros</p>
+            <p style="color: #0277BD; font-weight: 700; font-size: 16px; margin: 4px 0;">Salvaste <span id="final-liters">0</span> litros</p>
             <div class="info-box" id="impact-text"></div>
             <button class="btn" onclick="startGame()">Jugar de nuevo</button>
         </div>
