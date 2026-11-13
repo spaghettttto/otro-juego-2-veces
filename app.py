@@ -51,16 +51,16 @@ if st.session_state.juego_activo == "menu":
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2, gap="medium")
+    col1, col2, col3 = st.columns(3, gap="medium")
 
     with col1:
         st.markdown("""
-            <div style="background: #FFFFFF; border: 2.5px solid #81D4FA; border-radius: 18px; padding: 22px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 2.5px solid #81D4FA; border-radius: 18px; padding: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 48px; margin-bottom: 8px;">💧</div>
-                    <h3 style="color: #01579B; margin: 0 0 10px 0;">AquaPou</h3>
-                    <p style="color: #0277BD; font-size: 14px; line-height: 1.4;">
-                        Atrapa agua limpia y evita industrias contaminantes (textil, ganadería, petróleo). ¡Incluye datos de impacto global!
+                    <div style="font-size: 42px; margin-bottom: 6px;">💧</div>
+                    <h3 style="color: #01579B; margin: 0 0 8px 0; font-size: 18px;">AquaPou</h3>
+                    <p style="color: #0277BD; font-size: 13px; line-height: 1.35;">
+                        Atrapa agua limpia y esquiva industrias contaminantes.
                     </p>
                 </div>
             </div>
@@ -71,18 +71,34 @@ if st.session_state.juego_activo == "menu":
 
     with col2:
         st.markdown("""
-            <div style="background: #FFFFFF; border: 2.5px solid #81D4FA; border-radius: 18px; padding: 22px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 2.5px solid #81D4FA; border-radius: 18px; padding: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 48px; margin-bottom: 8px;">🚰</div>
-                    <h3 style="color: #01579B; margin: 0 0 10px 0;">¡Cierra la Llave!</h3>
-                    <p style="color: #0277BD; font-size: 14px; line-height: 1.4;">
-                        Detén fugas y desperdicios domésticos a contratiempo antes de que se vacíe la reserva de agua. ¡Equivalencias en litros!
+                    <div style="font-size: 42px; margin-bottom: 6px;">🚰</div>
+                    <h3 style="color: #01579B; margin: 0 0 8px 0; font-size: 18px;">Cierra la Llave</h3>
+                    <p style="color: #0277BD; font-size: 13px; line-height: 1.35;">
+                        Detén fugas y desperdicios domésticos a contratiempo.
                     </p>
                 </div>
             </div>
         """, unsafe_allow_html=True)
-        if st.button("🎮 Jugar Cierra la Llave", use_container_width=True):
+        if st.button("🎮 Jugar Llave", use_container_width=True):
             st.session_state.juego_activo = "llave"
+            st.rerun()
+
+    with col3:
+        st.markdown("""
+            <div style="background: #FFFFFF; border: 2.5px solid #81D4FA; border-radius: 18px; padding: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 42px; margin-bottom: 6px;">🌱</div>
+                    <h3 style="color: #01579B; margin: 0 0 8px 0; font-size: 18px;">Rescata el Río</h3>
+                    <p style="color: #0277BD; font-size: 13px; line-height: 1.35;">
+                        Limpia los desechos flotantes antes de que contaminen el río.
+                    </p>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("🎮 Jugar Río", use_container_width=True):
+            st.session_state.juego_activo = "rio"
             st.rerun()
 
 # --- VISTA: JUEGO 1 (AQUAPOU) ---
@@ -153,7 +169,7 @@ elif st.session_state.juego_activo == "pou":
     <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
-    let gameRunning = false, score = 0, highScore = 0, items = [], spawnTimer = 0, speedMultiplier = 1, mouthOpenTimer = 0;
+    let gameRunning = false, score = 0, highScore = 0, items = [], spawnTimer = 0, speedMultiplier = 1;
     const pou = { x: canvas.width / 2, y: canvas.height - 60, radius: 36, speed: 8 };
     let keys = { ArrowLeft: false, ArrowRight: false };
     window.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft" || e.key === "ArrowRight") keys[e.key] = true; });
@@ -173,7 +189,7 @@ elif st.session_state.juego_activo == "pou":
     function startGame() {
         document.getElementById("start-screen").classList.add("hidden");
         document.getElementById("gameover-screen").classList.add("hidden");
-        score = 0; items = []; spawnTimer = 0; speedMultiplier = 1; mouthOpenTimer = 0;
+        score = 0; items = []; spawnTimer = 0; speedMultiplier = 1;
         pou.x = canvas.width / 2; document.getElementById("score").innerText = score;
         gameRunning = true; requestAnimationFrame(gameLoop);
     }
@@ -198,7 +214,6 @@ elif st.session_state.juego_activo == "pou":
         ctx.bezierCurveTo(pou.radius + 10, -4, pou.radius + 6, pou.radius, 0, pou.radius);
         ctx.bezierCurveTo(-pou.radius - 6, pou.radius, -pou.radius - 10, -4, 0, -pou.radius - 10);
         ctx.fillStyle = "#29B6F6"; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = "#0288D1"; ctx.stroke();
-        // Ojos
         ctx.fillStyle = "white"; ctx.beginPath(); ctx.arc(-10, 3, 7, 0, Math.PI * 2); ctx.arc(10, 3, 7, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "#01579B"; ctx.beginPath(); ctx.arc(-9, 3, 3.5, 0, Math.PI * 2); ctx.arc(9, 3, 3.5, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
@@ -386,3 +401,154 @@ elif st.session_state.juego_activo == "llave":
     </html>
     """
     components.html(llave_html, height=520)
+
+# --- VISTA: JUEGO 3 (RESCATA EL RÍO) ---
+elif st.session_state.juego_activo == "rio":
+    if st.button("⬅️ Volver al menú principal"):
+        st.session_state.juego_activo = "menu"
+        st.rerun()
+
+    st.markdown("### 🌱 Rescata el Río (Limpieza y Purificación)")
+
+    rio_html = """
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; user-select: none; }
+        body { margin: 0; padding: 0; display: flex; justify-content: center; background: transparent; }
+        #container {
+            position: relative; width: 520px; background: #FFFFFF; border: 3px solid #64B5F6;
+            border-radius: 20px; padding: 18px; box-shadow: 0 8px 20px rgba(2, 119, 189, 0.15);
+        }
+        #top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .stat-pill { background: #E1F5FE; color: #0277BD; padding: 6px 12px; border-radius: 14px; font-weight: 700; font-size: 14px; border: 1.5px solid #81D4FA; }
+        #poll-wrapper { width: 100%; height: 20px; background: #ECEFF1; border-radius: 10px; overflow: hidden; border: 2px solid #90CAF9; margin-bottom: 14px; position: relative; }
+        #poll-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #66BB6A, #FFA726, #E53935); transition: width 0.2s ease; }
+        #poll-label { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; font-weight: 800; color: #01579B; }
+        #grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .river-cell {
+            height: 105px; background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+            border: 2px solid #A5D6A7; border-radius: 15px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; cursor: pointer; position: relative;
+        }
+        .river-cell.dirty { background: #FFF3E0; border-color: #FFB74D; }
+        .emoji { font-size: 38px; line-height: 1; }
+        .tag { font-size: 10px; font-weight: 700; margin-top: 4px; padding: 2px 6px; border-radius: 6px; background: #FFE0B2; color: #E65100; }
+        .overlay {
+            position: absolute; inset: 0; background: rgba(255, 255, 255, 0.95);
+            border-radius: 17px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; z-index: 20;
+        }
+        .hidden { display: none !important; }
+        .info-box { background: #E3F2FD; border: 2px solid #42A5F5; border-radius: 12px; padding: 12px; margin: 10px 0 16px 0; color: #0D47A1; font-size: 13.5px; line-height: 1.4; }
+        .btn { background: linear-gradient(135deg, #29B6F6, #0288D1); color: white; border: none; padding: 10px 24px; font-size: 15px; font-weight: bold; border-radius: 25px; cursor: pointer; }
+    </style>
+    </head>
+    <body>
+    <div id="container">
+        <div id="top-bar">
+            <div class="stat-pill">⏱️ Tiempo: <span id="time">30</span>s</div>
+            <div class="stat-pill">✨ Limpiados: <span id="cleaned">0</span></div>
+        </div>
+        <div id="poll-wrapper">
+            <div id="poll-fill"></div>
+            <div id="poll-label">Contaminación del Río: <span id="poll-pct">0</span>%</div>
+        </div>
+        <div id="grid"></div>
+        <div id="start-overlay" class="overlay">
+            <div style="font-size: 50px; margin-bottom: 6px;">🌱🌊</div>
+            <h2 style="color: #01579B; margin: 0 0 8px 0;">¡Rescata el Río!</h2>
+            <p style="color: #0277BD; font-size: 14px; margin-bottom: 16px;">Haz clic en la basura antes de que la contaminación llegue al 100%.</p>
+            <button class="btn" onclick="startGame()">Comenzar Limpieza</button>
+        </div>
+        <div id="end-overlay" class="overlay hidden">
+            <div id="end-emoji" style="font-size: 46px;">🌿🐟</div>
+            <h2 id="end-title" style="color: #01579B; margin: 4px 0;">¡Río Purificado!</h2>
+            <p style="color: #0277BD; font-weight: 700; font-size: 16px; margin: 4px 0;">Limpiaste <span id="final-cleaned">0</span> desechos</p>
+            <div class="info-box" id="impact-text"></div>
+            <button class="btn" onclick="startGame()">Jugar de nuevo</button>
+        </div>
+    </div>
+    <script>
+    const grid = document.getElementById("grid");
+    let cells = [], timeLeft = 30, cleanedCount = 0, pollutionLevel = 0, gameActive = false, timerInterval, spawnInterval, pollInterval;
+    const TRASH = [
+        { emoji: "🛢️", label: "Químicos" },
+        { emoji: "🛍️", label: "Plástico" },
+        { emoji: "🔋", label: "Batería" },
+        { emoji: "🥤", label: "Basura" }
+    ];
+    for (let i = 0; i < 9; i++) {
+        const div = document.createElement("div");
+        div.className = "river-cell";
+        div.innerHTML = `<div class="emoji" style="opacity:0.3;">💧</div>`;
+        div.onclick = () => handleCellClick(i);
+        grid.appendChild(div);
+        cells.push({ el: div, active: null, timeout: null });
+    }
+    function updatePollutionUI() {
+        pollutionLevel = Math.max(0, Math.min(100, pollutionLevel));
+        document.getElementById("poll-fill").style.width = pollutionLevel + "%";
+        document.getElementById("poll-pct").innerText = Math.round(pollutionLevel);
+        if (pollutionLevel >= 100 && gameActive) endGame(true);
+    }
+    function clearCell(i) {
+        let c = cells[i];
+        if (c.timeout) clearTimeout(c.timeout);
+        c.active = null; c.el.className = "river-cell";
+        c.el.innerHTML = `<div class="emoji" style="opacity:0.3;">💧</div>`;
+    }
+    function spawnTrash() {
+        if (!gameActive) return;
+        let free = cells.map((c, i) => c.active === null ? i : -1).filter(i => i !== -1);
+        if (free.length === 0) return;
+        let idx = free[Math.floor(Math.random() * free.length)];
+        let item = TRASH[Math.floor(Math.random() * TRASH.length)];
+        let c = cells[idx];
+        c.active = item; c.el.className = "river-cell dirty";
+        c.el.innerHTML = `<div class="emoji">${item.emoji}</div><div class="tag">${item.label}</div>`;
+        c.timeout = setTimeout(() => {
+            if (c.active) { pollutionLevel += 12; updatePollutionUI(); }
+            clearCell(idx);
+        }, 1500);
+    }
+    function handleCellClick(i) {
+        if (!gameActive) return;
+        let c = cells[i]; if (!c.active) return;
+        cleanedCount++; pollutionLevel = Math.max(0, pollutionLevel - 8);
+        document.getElementById("cleaned").innerText = cleanedCount;
+        updatePollutionUI();
+        clearCell(i);
+    }
+    function startGame() {
+        document.getElementById("start-overlay").classList.add("hidden");
+        document.getElementById("end-overlay").classList.add("hidden");
+        timeLeft = 30; cleanedCount = 0; pollutionLevel = 0; gameActive = true;
+        document.getElementById("time").innerText = timeLeft;
+        document.getElementById("cleaned").innerText = cleanedCount;
+        updatePollutionUI(); cells.forEach((_, i) => clearCell(i));
+        timerInterval = setInterval(() => {
+            timeLeft--; document.getElementById("time").innerText = timeLeft;
+            if (timeLeft <= 0) endGame(false);
+        }, 1000);
+        spawnInterval = setInterval(spawnTrash, 550);
+        pollInterval = setInterval(() => {
+            let dirties = cells.filter(c => c.active !== null).length;
+            if (dirties > 0) { pollutionLevel += dirties * 0.5; updatePollutionUI(); }
+        }, 300);
+    }
+    function endGame(overload) {
+        gameActive = false; clearInterval(timerInterval); clearInterval(spawnInterval); clearInterval(pollInterval);
+        cells.forEach((_, i) => clearCell(i));
+        document.getElementById("final-cleaned").innerText = cleanedCount;
+        document.getElementById("end-emoji").innerText = overload ? "⚠️🌊" : "🌿🐟";
+        document.getElementById("end-title").innerText = overload ? "¡El río colapsó!" : "¡Río Salvado!";
+        document.getElementById("impact-text").innerHTML = `🌍 Mantener los ríos y humedales limpios protege los mantos acuíferos subterráneos de los cuales depende más del <b>50% del agua potable</b> del planeta.`;
+        document.getElementById("end-overlay").classList.remove("hidden");
+    }
+    </script>
+    </body>
+    </html>
+    """
+    components.html(rio_html, height=520)
